@@ -13,6 +13,13 @@ const throwOnError: Middleware = {
     },
 };
 
+const authMiddleware: Middleware = {
+    async onRequest({ request }) {
+        request.headers.set('Authorization', `Bearer ${localStorage.getItem('token')}`);
+        return undefined;
+    }
+}
+
 const client = createClient<paths>({ baseUrl: 'http://localhost:8000/' });
 client.use(throwOnError);
 

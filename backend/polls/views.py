@@ -1,16 +1,17 @@
+from argparse import Action
+from multiprocessing import context
 from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
 from django.http import HttpResponse, JsonResponse, HttpRequest
 from django.views.decorators.csrf import csrf_exempt
 
-from oauth2_provider.contrib.rest_framework import OAuth2Authentication
-from requests import Session
-
 
 from .models import Question, Choice
 from rest_framework import permissions, viewsets, generics
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication
+from rest_framework.decorators import action
+from rest_framework.response import Response
 
 from .serializers import QuestionSerializer, ChoiceSerializer
 
@@ -26,11 +27,13 @@ class QuestionViewSet(viewsets.ModelViewSet):
     """
     queryset = Question.objects.all()
     serializer_class = QuestionSerializer
-    authentication_classes = [OAuth2Authentication, SessionAuthentication, TokenAuthentication]
+    authentication_classes = [SessionAuthentication, TokenAuthentication]
     permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+
+
 
 class ChoiceViewSet(viewsets.ModelViewSet):
     """

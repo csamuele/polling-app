@@ -11,13 +11,12 @@ type UseQueryOptions<T> = ParamsOption<T> &
         }
     }
 
-export function getQuestions({ params, body, reactQuery }: UseQueryOptions<paths['/api/questions/']['get']>) {
+export function getQuestions({ reactQuery }: UseQueryOptions<paths['/api/questions/']['get']>) {
     return useQuery({
         ...reactQuery,
         queryKey: ['questions'],
         queryFn: async ({ signal }) => {
             const { data } = await client.GET('/api/questions/', { 
-                params,
                 signal,
         });
         return data;

@@ -98,22 +98,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/users/register/": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["users_register_create"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -143,7 +127,7 @@ export interface components {
              * Format: date-time
              */
             pub_date?: string;
-            readonly choices?: string[];
+            readonly choices?: components["schemas"]["Choice"][];
             /** Format: uri */
             readonly choices_url?: string;
             /** @description Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only. */
@@ -158,7 +142,7 @@ export interface components {
              * Format: date-time
              */
             pub_date: string;
-            readonly choices: string[];
+            readonly choices: components["schemas"]["Choice"][];
             /** Format: uri */
             readonly choices_url: string;
             /** @description Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only. */
@@ -504,24 +488,6 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["Choice"];
                 };
-            };
-        };
-    };
-    users_register_create: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description No response body */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
             };
         };
     };

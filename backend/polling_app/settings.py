@@ -48,11 +48,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'oauth2_provider',
     'rest_framework.authtoken',
     'corsheaders',
     'users',
     'drf_spectacular',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.openid_connect',
 ]
 
 MIDDLEWARE = [
@@ -64,6 +67,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 CORS_ALLOWED_ORIGINS = [
@@ -156,7 +160,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
     ],
@@ -179,3 +182,27 @@ SPECTACULAR_SETTINGS = {
 DEFAULT_PERMISSION_CLASSES = [
     'rest_framework.permissions.AllowAny',
 ]
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+SOCIALACCOUNT_PROVIDERS = {
+    "openid_connect": {
+        "APPS": [
+            {
+                "provider_id": "keycloak",
+                "name": "Keycloak",
+                "client_id": env("KEYCLOAK_CLIENT_ID"),
+                "secret": env("KEYCLOAK_CLIENT_SECRET"),
+                "settings": {
+                    "server_url": env("KEYCLOAK_SERVER_URL"),
+                }
+            }
+        ]
+    }
+}
+
+SOCIALACCOUNT_ONLY = True
+ACCOUNT_EMAIL_VERIFICATION = 'none'

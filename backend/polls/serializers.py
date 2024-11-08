@@ -17,11 +17,9 @@ class ChoiceSerializer(serializers.HyperlinkedModelSerializer):
 
 class QuestionSerializer(serializers.ModelSerializer):
     user = serializers.ReadOnlyField(source='owner.username')
-    choices = serializers.HyperlinkedRelatedField(
+    choices = ChoiceSerializer(
         many=True,
         read_only=True,
-        view_name='choice-detail',
-        lookup_field='pk'
     )
     choices_url = serializers.HyperlinkedIdentityField(
         view_name='question-choices',

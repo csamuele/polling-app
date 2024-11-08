@@ -19,11 +19,14 @@ export const Home: React.FC = () => {
                     </p>
                     <div>
                     <h4 className="font-semibold text-lg mb-2">Choices:</h4>
-                    <ul>
-                        <li>Choice 1</li>
-                        <li>Choice 2</li>
-                        <li>Choice 3</li>
-                    </ul>
+                    {question.choices.map(choice => {
+                        return (
+                            <div key={choice.url} className="flex items-center justify-between mb-2">
+                                <span>{choice.choice_text}</span>
+                                <span>{choice.votes} votes</span>
+                            </div>
+                        )
+                    })}
                     </div>
                 </div>
             ))}
