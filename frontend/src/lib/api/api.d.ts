@@ -49,10 +49,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description API endpoint that returns the 5 most recent questions. */
+        /** @description Question endpoints. */
         get: operations["api_questions_list"];
         put?: never;
-        /** @description API endpoint that returns the 5 most recent questions. */
+        /** @description Question endpoints. */
         post: operations["api_questions_create"];
         delete?: never;
         options?: never;
@@ -67,16 +67,16 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description API endpoint that returns the 5 most recent questions. */
+        /** @description Question endpoints. */
         get: operations["api_questions_retrieve"];
-        /** @description API endpoint that returns the 5 most recent questions. */
+        /** @description Question endpoints. */
         put: operations["api_questions_update"];
         post?: never;
-        /** @description API endpoint that returns the 5 most recent questions. */
+        /** @description Question endpoints. */
         delete: operations["api_questions_destroy"];
         options?: never;
         head?: never;
-        /** @description API endpoint that returns the 5 most recent questions. */
+        /** @description Question endpoints. */
         patch: operations["api_questions_partial_update"];
         trace?: never;
     };
@@ -98,15 +98,15 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/exchange_token/": {
+    "/api/user-questions/": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        /** @description Exchanges an authorization code from Keycloak for an access token. */
-        get: operations["Exchange Code for Token"];
+        /** @description Endpoint for questions created by the user. */
+        get: operations["api_user_questions_list"];
         put?: never;
         post?: never;
         delete?: never;
@@ -120,24 +120,19 @@ export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
         Choice: {
-            /** Format: uri */
-            readonly url: string;
+            readonly id: number;
             choice_text: string;
             votes?: number;
-            /** Format: uri */
-            question: string;
+            question: number;
         };
         PatchedChoice: {
-            /** Format: uri */
-            readonly url?: string;
+            readonly id?: number;
             choice_text?: string;
             votes?: number;
-            /** Format: uri */
-            question?: string;
+            question?: number;
         };
         PatchedQuestion: {
-            /** Format: uri */
-            readonly url?: string;
+            readonly id?: number;
             question_text?: string;
             /**
              * Date published
@@ -145,14 +140,9 @@ export interface components {
              */
             pub_date?: string;
             readonly choices?: components["schemas"]["Choice"][];
-            /** Format: uri */
-            readonly choices_url?: string;
-            /** @description Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only. */
-            readonly user?: string;
         };
         Question: {
-            /** Format: uri */
-            readonly url: string;
+            readonly id: number;
             question_text: string;
             /**
              * Date published
@@ -160,20 +150,6 @@ export interface components {
              */
             pub_date: string;
             readonly choices: components["schemas"]["Choice"][];
-            /** Format: uri */
-            readonly choices_url: string;
-            /** @description Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only. */
-            readonly user: string;
-        };
-        TokenResponse: {
-            access_token: string;
-            expires_in: number;
-            refresh_expires_in: number;
-            refresh_token: string;
-            token_type: string;
-            id_token?: string;
-            session_state: string;
-            scope: string;
         };
     };
     responses: never;
@@ -518,14 +494,9 @@ export interface operations {
             };
         };
     };
-    "Exchange Code for Token": {
+    api_user_questions_list: {
         parameters: {
-            query: {
-                /** @description Authorization code */
-                code: string;
-                /** @description Redirect URI matching Keycloak config */
-                redirect_uri: string;
-            };
+            query?: never;
             header?: never;
             path?: never;
             cookie?: never;
@@ -537,7 +508,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["TokenResponse"];
+                    "application/json": components["schemas"]["Question"][];
                 };
             };
         };

@@ -1,6 +1,5 @@
 import React from "react";
 import { useKeycloak } from '@react-keycloak/web'
-import { useExchangeToken } from "@hooks/queries";
 
 export const Login: React.FC = () => {
     const { keycloak } = useKeycloak()

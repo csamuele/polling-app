@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import type { components } from "@lib/api"
-import { QuestionForm } from "./QuestionForm";
+import { QuestionForm } from "@components/Question";
 import { useKeycloak } from "@react-keycloak/web";
 
 export const NewQuestion: React.FC = () => {

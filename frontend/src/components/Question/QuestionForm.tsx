@@ -16,7 +16,7 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({ open, handleClose, q
     
     const { mutate } = $api.useMutation('post', '/api/questions/', {
         onSuccess: () => {
-            queryClient.invalidateQueries({queryKey: ['get', '/api/questions/']});
+            queryClient.invalidateQueries({queryKey: ['get']});
         }
     });
     const handleSave = async (e: React.FormEvent) => {

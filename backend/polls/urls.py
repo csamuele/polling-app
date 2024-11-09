@@ -10,4 +10,5 @@ router.register(r"choices", views.ChoiceViewSet, basename="choice")
 urlpatterns = [
     path("", include(router.urls)),
     path('questions/<int:pk>/choices/', views.QuestionChoicesView.as_view(), name="question-choices"),
+    path('user-questions/', views.UserQuestionsView.as_view(), name="user-questions"),
 ]

@@ -4,31 +4,22 @@ from .models import Question, Choice
 from rest_framework import serializers
 
 
-class ChoiceSerializer(serializers.HyperlinkedModelSerializer):
+class ChoiceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Choice
-        fields = ["url", "choice_text", "votes", "question"]
-        extra_kwargs = {
-            'question' : {
-                'view_name': 'question-detail',
-                'lookup_field': 'pk'
-            }
-        }
+        fields = ["id", "choice_text", "votes", "question"]
+
 
 class QuestionSerializer(serializers.ModelSerializer):
     choices = ChoiceSerializer(
         many=True,
         read_only=True,
     )
-    choices_url = serializers.HyperlinkedIdentityField(
-        view_name='question-choices',
-        lookup_field='pk'
-    )
     class Meta:
         model = Question
-        fields = ["url", "question_text", "pub_date", "choices", "choices_url"]
+        fields = ["id", "question_text", "pub_date", "choices"]
         read_only_fields = ['owner']
     def create(self, validated_data):
-        validated_data['owner'] = self.context['request'].user
+        validated_data['owner'] = self.context['request'].user.sub
         return super().create(validated_data)
 
