@@ -16,7 +16,6 @@ class ChoiceSerializer(serializers.HyperlinkedModelSerializer):
         }
 
 class QuestionSerializer(serializers.ModelSerializer):
-    user = serializers.ReadOnlyField(source='owner.username')
     choices = ChoiceSerializer(
         many=True,
         read_only=True,
@@ -27,5 +26,9 @@ class QuestionSerializer(serializers.ModelSerializer):
     )
     class Meta:
         model = Question
-        fields = ["url", "question_text", "pub_date", "choices", "choices_url", "user"]
+        fields = ["url", "question_text", "pub_date", "choices", "choices_url"]
+        read_only_fields = ['owner']
+    def create(self, validated_data):
+        validated_data['owner'] = self.context['request'].user
+        return super().create(validated_data)
 

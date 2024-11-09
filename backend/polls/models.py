@@ -1,11 +1,12 @@
 from django.db import models
 from django.utils import timezone
 import datetime
-from users.models import User
+# from users.models import KeycloakUser
+from django.conf import settings
 
 
 class Question(models.Model):
-    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    owner = models.CharField(max_length=50)
     question_text = models.CharField(max_length=200)
     pub_date = models.DateTimeField("date published")
     def __str__(self):

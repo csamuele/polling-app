@@ -98,6 +98,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/exchange_token/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Exchanges an authorization code from Keycloak for an access token. */
+        get: operations["Exchange Code for Token"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -147,6 +164,16 @@ export interface components {
             readonly choices_url: string;
             /** @description Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only. */
             readonly user: string;
+        };
+        TokenResponse: {
+            access_token: string;
+            expires_in: number;
+            refresh_expires_in: number;
+            refresh_token: string;
+            token_type: string;
+            id_token?: string;
+            session_state: string;
+            scope: string;
         };
     };
     responses: never;
@@ -487,6 +514,30 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Choice"];
+                };
+            };
+        };
+    };
+    "Exchange Code for Token": {
+        parameters: {
+            query: {
+                /** @description Authorization code */
+                code: string;
+                /** @description Redirect URI matching Keycloak config */
+                redirect_uri: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TokenResponse"];
                 };
             };
         };

@@ -50,12 +50,13 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
-    'users',
+    'users.apps.UsersConfig',
     'drf_spectacular',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.openid_connect',
+    # 'allauth',
+    # 'allauth.account',
+    # 'allauth.socialaccount',
+    # 'allauth.socialaccount.providers.openid_connect',
+    'keycloak',
 ]
 
 MIDDLEWARE = [
@@ -67,7 +68,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
-    'allauth.account.middleware.AccountMiddleware',
+    # 'allauth.account.middleware.AccountMiddleware',
 ]
 
 CORS_ALLOWED_ORIGINS = [
@@ -131,7 +132,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-AUTH_USER_MODEL = 'users.User'
+# AUTH_USER_MODEL = 'users.KeycloakUser'
 
 LOGIN_URL = '/admin/login/'
 
@@ -161,7 +162,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.TokenAuthentication',
+        'users.authentication.KeycloakAuthentication',
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
@@ -185,7 +186,7 @@ DEFAULT_PERMISSION_CLASSES = [
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend',
+    # 'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
 SOCIALACCOUNT_PROVIDERS = {
@@ -197,7 +198,7 @@ SOCIALACCOUNT_PROVIDERS = {
                 "client_id": env("KEYCLOAK_CLIENT_ID"),
                 "secret": env("KEYCLOAK_CLIENT_SECRET"),
                 "settings": {
-                    "server_url": env("KEYCLOAK_SERVER_URL"),
+                    "server_url": f"{env("KEYCLOAK_SERVER_URL")}realms/polling-app/.well-known/openid-configuration",
                 }
             }
         ]
@@ -206,3 +207,10 @@ SOCIALACCOUNT_PROVIDERS = {
 
 SOCIALACCOUNT_ONLY = True
 ACCOUNT_EMAIL_VERIFICATION = 'none'
+
+KEYCLOAK_CONFIG = {
+    'server_url': env("KEYCLOAK_SERVER_URL"),
+    'client_id': env("KEYCLOAK_CLIENT_ID"),
+    'realm_name': 'polling-app',
+    'client_secret_key': env("KEYCLOAK_CLIENT_SECRET"),
+}

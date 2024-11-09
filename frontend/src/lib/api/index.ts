@@ -1,5 +1,7 @@
-import createClient, { type Middleware } from "openapi-fetch";
+import createFetchClient, { type Middleware } from "openapi-fetch";
+import createClient from "openapi-react-query";
 import type { paths } from '@lib/api/api';
+import keycloak from '../../keycloak';
 
 const throwOnError: Middleware = {
     async onResponse({ response }) {
@@ -15,12 +17,19 @@ const throwOnError: Middleware = {
 
 const authMiddleware: Middleware = {
     async onRequest({ request }) {
-        request.headers.set('Authorization', `Bearer ${localStorage.getItem('token')}`);
+        const token = keycloak.token;
+        if (keycloak.authenticated) {
+            request.headers.set('Authorization', `Bearer ${token}`);
+        }
         return undefined;
     }
 }
 
-const client = createClient<paths>({ baseUrl: 'http://localhost:8000/' });
-client.use(throwOnError);
+const fetchClient = createFetchClient<paths>({ baseUrl: 'http://localhost:8000/' });
+fetchClient.use(authMiddleware);
+fetchClient.use(throwOnError);
+const $api = createClient(fetchClient);
 
-export default client;
+export default $api;
+
+export type {components, $defs, operations, paths, webhooks} from './api.ts';

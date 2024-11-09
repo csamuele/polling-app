@@ -5,6 +5,7 @@ import App from './App.tsx'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import keycloak from './keycloak'
 import { ReactKeycloakProvider } from '@react-keycloak/web'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -22,9 +23,11 @@ createRoot(document.getElementById('root')!).render(
   
   <ReactKeycloakProvider authClient={keycloak}>
     <StrictMode>
-      <QueryClientProvider client={queryClient}>
-        <App />
-      </QueryClientProvider>
+      
+        <QueryClientProvider client={queryClient}>
+          <App />
+        <ReactQueryDevtools initialIsOpen={false} />
+        </QueryClientProvider>
     </StrictMode>
   </ReactKeycloakProvider>,
   )
