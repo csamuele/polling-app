@@ -16,7 +16,7 @@ from rest_framework.response import Response
 from users.authentication import KeycloakAuthentication
 from rest_framework.views import APIView
 
-from .serializers import QuestionSerializer, ChoiceSerializer
+from .serializers import QuestionSerializer, ChoiceSerializer, VoteSerializer
 
 class IsOwnerOrReadOnly(permissions.BasePermission):
     def has_object_permission(self, request: HttpRequest, view, obj) -> bool:
@@ -64,3 +64,25 @@ class QuestionChoicesView(generics.ListCreateAPIView):
         question = get_object_or_404(Question, pk=self.kwargs["pk"])
         return question.choices.all()
 
+class VoteView(APIView):
+    authentication_classes = [SessionAuthentication, KeycloakAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+
+    @extend_schema(
+        request=VoteSerializer,
+        responses={201: VoteSerializer}
+    )
+    def post(self, request, *args, **kwargs):
+        question_id = self.kwargs["pk"]
+        data = {
+            "question": question_id,
+            "choices": request.data.get("choices"),
+            "owner": request.user.sub
+        }
+        serializer = VoteSerializer(data=data, context={'request': request})
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=201)
+        return Response(serializer.errors, status=400)
+       
+        

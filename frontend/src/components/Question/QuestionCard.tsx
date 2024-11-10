@@ -8,6 +8,7 @@ import { QuestionForm } from "./QuestionForm";
 import { useState } from "react";
 import $api from "@lib/api";
 import { useQueryClient } from "@tanstack/react-query";
+import { useKeycloak } from "@react-keycloak/web";
 
 interface QuestionCardProps {
     question: Question;
@@ -19,6 +20,7 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({question, canEdit, on
     const { setQuestion } = useQuestion();
     const [open, setOpen] = useState(false);
     const queryClient = useQueryClient();
+    const { keycloak } = useKeycloak();
     const { mutate } = $api.useMutation("put", "/api/questions/{id}/", {
         onSuccess: () => {
             setOpen(false)
@@ -56,9 +58,14 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({question, canEdit, on
                         </button>}
                 </div>
             </div>
-            <p className="text-gray-500 mb-4">
-                Published {moment(question.pub_date).fromNow()}
-            </p>
+            <div className="flex justify-between">
+                <p className="text-gray-500 mb-4">
+                    Published {moment(question.pub_date).fromNow()}
+                </p>
+                <p className="text-gray-500 mb-4">
+                    Total Votes: {question.votes}
+                </p>
+            </div>
             <div>
                 <h4 className="font-semibold text-lg mb-2">Choices:</h4>
                 {question.choices.map(choice => {
@@ -70,6 +77,13 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({question, canEdit, on
                 )
             })}
             </div>
+            {keycloak.authenticated &&
+                <div className="mt-4 flex align-middle">
+                    <button className="w-full text-blue-500 py-2 px-4 hover:text-blue-700">
+                        Vote
+                    </button>
+                </div>
+                }
         <QuestionForm open={open} onClose={() => setOpen(false)} onSave={handleSave}/>
         </div>
     )

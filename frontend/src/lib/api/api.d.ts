@@ -60,6 +60,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/questions/{id}/vote/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["api_questions_vote_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/user-questions/": {
         parameters: {
             query?: never;
@@ -85,7 +101,7 @@ export interface components {
             readonly id: number;
             readonly question: number;
             choice_text: string;
-            votes?: number;
+            readonly votes: number;
         };
         PatchedQuestion: {
             readonly id?: number;
@@ -96,6 +112,7 @@ export interface components {
              */
             pub_date?: string;
             choices?: components["schemas"]["Choice"][];
+            readonly votes?: number;
         };
         Question: {
             readonly id: number;
@@ -106,6 +123,13 @@ export interface components {
              */
             pub_date: string;
             choices: components["schemas"]["Choice"][];
+            readonly votes: number;
+        };
+        Vote: {
+            readonly id: number;
+            readonly question: number;
+            choices: number[];
+            readonly owner: string;
         };
     };
     responses: never;
@@ -303,6 +327,33 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Choice"];
+                };
+            };
+        };
+    };
+    api_questions_vote_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Vote"];
+                "application/x-www-form-urlencoded": components["schemas"]["Vote"];
+                "multipart/form-data": components["schemas"]["Vote"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Vote"];
                 };
             };
         };
