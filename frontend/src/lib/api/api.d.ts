@@ -4,44 +4,6 @@
  */
 
 export interface paths {
-    "/api/choices/": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** @description API endpoint that allows choices to be viewed or edited. */
-        get: operations["api_choices_list"];
-        put?: never;
-        /** @description API endpoint that allows choices to be viewed or edited. */
-        post: operations["api_choices_create"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/choices/{id}/": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** @description API endpoint that allows choices to be viewed or edited. */
-        get: operations["api_choices_retrieve"];
-        /** @description API endpoint that allows choices to be viewed or edited. */
-        put: operations["api_choices_update"];
-        post?: never;
-        /** @description API endpoint that allows choices to be viewed or edited. */
-        delete: operations["api_choices_destroy"];
-        options?: never;
-        head?: never;
-        /** @description API endpoint that allows choices to be viewed or edited. */
-        patch: operations["api_choices_partial_update"];
-        trace?: never;
-    };
     "/api/questions/": {
         parameters: {
             query?: never;
@@ -121,15 +83,9 @@ export interface components {
     schemas: {
         Choice: {
             readonly id: number;
+            readonly question: number;
             choice_text: string;
             votes?: number;
-            question: number;
-        };
-        PatchedChoice: {
-            readonly id?: number;
-            choice_text?: string;
-            votes?: number;
-            question?: number;
         };
         PatchedQuestion: {
             readonly id?: number;
@@ -139,7 +95,7 @@ export interface components {
              * Format: date-time
              */
             pub_date?: string;
-            readonly choices?: components["schemas"]["Choice"][];
+            choices?: components["schemas"]["Choice"][];
         };
         Question: {
             readonly id: number;
@@ -149,7 +105,7 @@ export interface components {
              * Format: date-time
              */
             pub_date: string;
-            readonly choices: components["schemas"]["Choice"][];
+            choices: components["schemas"]["Choice"][];
         };
     };
     responses: never;
@@ -160,149 +116,6 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
-    api_choices_list: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Choice"][];
-                };
-            };
-        };
-    };
-    api_choices_create: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["Choice"];
-                "application/x-www-form-urlencoded": components["schemas"]["Choice"];
-                "multipart/form-data": components["schemas"]["Choice"];
-            };
-        };
-        responses: {
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Choice"];
-                };
-            };
-        };
-    };
-    api_choices_retrieve: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description A unique integer value identifying this choice. */
-                id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Choice"];
-                };
-            };
-        };
-    };
-    api_choices_update: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description A unique integer value identifying this choice. */
-                id: number;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["Choice"];
-                "application/x-www-form-urlencoded": components["schemas"]["Choice"];
-                "multipart/form-data": components["schemas"]["Choice"];
-            };
-        };
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Choice"];
-                };
-            };
-        };
-    };
-    api_choices_destroy: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description A unique integer value identifying this choice. */
-                id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description No response body */
-            204: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    api_choices_partial_update: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description A unique integer value identifying this choice. */
-                id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: {
-            content: {
-                "application/json": components["schemas"]["PatchedChoice"];
-                "application/x-www-form-urlencoded": components["schemas"]["PatchedChoice"];
-                "multipart/form-data": components["schemas"]["PatchedChoice"];
-            };
-        };
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Choice"];
-                };
-            };
-        };
-    };
     api_questions_list: {
         parameters: {
             query?: never;

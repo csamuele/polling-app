@@ -1,4 +1,5 @@
 from argparse import Action
+import re
 from drf_spectacular.utils import extend_schema
 from django.shortcuts import  get_object_or_404
 
@@ -23,18 +24,17 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
             return True
         return obj.owner == request.user.sub
 
+
+    
+
 class QuestionViewSet(viewsets.ModelViewSet):
     """
     Question endpoints.
     """
     queryset = Question.objects.all()
-    serializer_class = QuestionSerializer
     authentication_classes = [SessionAuthentication, KeycloakAuthentication]
     permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
-
-    def perform_create(self, serializer):
-        user_id = self.request.user.sub
-        serializer.save(owner=user_id)
+    serializer_class = QuestionSerializer
 
 @extend_schema(
     responses={200: QuestionSerializer(many=True)}
@@ -52,12 +52,7 @@ class UserQuestionsView(APIView):
         return Response(serializer.data)
 
 
-class ChoiceViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows choices to be viewed or edited.
-    """
-    queryset = Choice.objects.all()
-    serializer_class = ChoiceSerializer
+
 
 class QuestionChoicesView(generics.ListCreateAPIView):
     """
@@ -68,5 +63,4 @@ class QuestionChoicesView(generics.ListCreateAPIView):
     def get_queryset(self):
         question = get_object_or_404(Question, pk=self.kwargs["pk"])
         return question.choices.all()
-    
 

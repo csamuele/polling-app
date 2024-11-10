@@ -5,7 +5,6 @@ from . import views
 
 router = DefaultRouter()
 router.register(r"questions", views.QuestionViewSet, basename="question")
-router.register(r"choices", views.ChoiceViewSet, basename="choice")
 
 urlpatterns = [
     path("", include(router.urls)),

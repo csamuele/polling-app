@@ -12,7 +12,7 @@ export const Login: React.FC = () => {
     return (
         <div>
             {keycloak.authenticated ? (
-                <button className="font-bold" onClick={() => keycloak.logout()}>Logout</button>
+                <button className="font-bold" onClick={() => keycloak.logout({redirectUri: window.location.origin})}>Logout</button>
             ) : (
                 <button className="font-bold" onClick={handleLogin}>Login</button>
             )}

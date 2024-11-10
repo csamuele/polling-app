@@ -1,45 +1,59 @@
 import React from "react";
 import moment from 'moment'
-import type { components } from "@lib/api";
-// import $api from "@lib/api";
-// import { useQueryClient } from "@tanstack/react-query";
-
-
-
+import type { Question } from "@lib/api";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
+import { useQuestion } from "./QuestionContextProvider";
+import { QuestionForm } from "./QuestionForm";
+import { useState } from "react";
+import $api from "@lib/api";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface QuestionCardProps {
-    question: components['schemas']['Question'];
-    onEdit?: (question: components['schemas']['PatchedQuestion']) => void;
+    question: Question;
+    canEdit?: boolean;
     onDelete?: (id: number) => void;
 }
 
-export const QuestionCard: React.FC<QuestionCardProps> = ({question, onEdit, onDelete}) => {
-
-    // const queryClient = useQueryClient();
-    // const { mutate } = $api.useMutation("delete", "/api/questions/{id}/", {
-    //     onSuccess: () => {
-    //         queryClient.invalidateQueries({ queryKey: ["get", "/api/user-questions/"] });
-    //     },
-    // });
-    
+export const QuestionCard: React.FC<QuestionCardProps> = ({question, canEdit, onDelete}) => {
+    const { setQuestion } = useQuestion();
+    const [open, setOpen] = useState(false);
+    const queryClient = useQueryClient();
+    const { mutate } = $api.useMutation("put", "/api/questions/{id}/", {
+        onSuccess: () => {
+            setOpen(false)
+            queryClient.invalidateQueries({ queryKey: ["get", "/api/user-questions/"] })
+        }
+    })
     const handleDelete = () => {
         if (onDelete) {
             onDelete(question.id)
         }
     }
-
     const handleEdit = () => {
-        if (onEdit) {
-            onEdit(question)
-        }
+        setQuestion(question)
+        setOpen(true)
     }
+    const handleSave = (question: Question) => {
+        mutate({
+            body: question,
+            params: { path: { id: question.id } }
+        })
+    }
+
     return (
         <div className="bg-white shadow-md rounded-lg p-4">
             <div className="flex justify-between items-center mb-4">
                 <h3 className="text-xl font-semibold mb-2">{question.question_text}</h3>
                 <div className="flex space-x-2">
-                    {onEdit && <button className="hover:text-blue-600 text-blue-500 px-2 py-1 rounded" onClick={handleEdit}>Edit</button>}
-                    {onDelete && <button className="hover:text-red-600 text-red-500 px-2 py-1 rounded" onClick={handleDelete}>Delete</button>}
+                    {canEdit && 
+                        <button className="hover:text-blue-600 text-blue-500 px-2 py-1 rounded" onClick={handleEdit}>
+                            <FontAwesomeIcon icon={faEdit} />
+                        </button>}
+                    {onDelete && 
+                        <button className="hover:text-red-600 text-red-500 px-2 py-1 rounded" onClick={handleDelete}>
+                            <FontAwesomeIcon icon={faTrash} />    
+                        </button>}
                 </div>
             </div>
             <p className="text-gray-500 mb-4">
@@ -56,6 +70,7 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({question, onEdit, onD
                 )
             })}
             </div>
+        <QuestionForm open={open} onClose={() => setOpen(false)} onSave={handleSave}/>
         </div>
     )
 }

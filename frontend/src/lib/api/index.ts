@@ -25,11 +25,17 @@ const authMiddleware: Middleware = {
     }
 }
 
-const fetchClient = createFetchClient<paths>({ baseUrl: 'http://localhost:8000/' });
+export const fetchClient = createFetchClient<paths>({ baseUrl: 'http://localhost:8000/' });
 fetchClient.use(authMiddleware);
 fetchClient.use(throwOnError);
 const $api = createClient(fetchClient);
 
 export default $api;
+import type { components } from "@lib/api/api";
+type Schemas = components["schemas"];
+export type Question = Schemas["Question"];
+export type Choice = Schemas["Choice"];
+export type PatchedQuestion = Schemas["PatchedQuestion"];
 
-export type {components, $defs, operations, paths, webhooks} from './api.ts';
+
+export type {$defs, operations, paths, webhooks} from './api.ts';
