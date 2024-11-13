@@ -1,5 +1,5 @@
 import React from "react";
-import { QuestionGrid, QuestionForm } from "@components/Question";
+import { QuestionGrid } from "@components/Question";
 import $api, {fetchClient} from "@lib/api";
 import { useQueryClient, useQuery, useMutation } from "@tanstack/react-query";
 
@@ -15,7 +15,7 @@ const MyQuestions: React.FC = () => {
             params: { path: {id}},
         }),
         onSuccess: () => {
-            queryClient.invalidateQueries({queryKey: ['get', '/api/user-questions/']});
+            queryClient.invalidateQueries({queryKey: ['get']});
         },
         
 

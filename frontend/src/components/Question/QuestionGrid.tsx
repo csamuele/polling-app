@@ -1,9 +1,9 @@
 import React from "react";
-import type { Question } from "@lib/api";
+import type { QuestionRead } from "@lib/api";
 import { QuestionCard } from "@components/Question";
 
 interface QuestionGridProps {
-    questions: Question[];
+    questions: QuestionRead[];
     isLoading: boolean;
     error: null;
     canEdit?: boolean;
@@ -13,7 +13,7 @@ interface QuestionGridProps {
 export const QuestionGrid: React.FC<QuestionGridProps> = ({questions, isLoading, error, canEdit, onDelete}) => {
 
     return (
-        <div className="container mx-auto p-4">
+        <div className="container mx-auto">
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 md:grid-cols-3">
             {isLoading && <p>Loading...</p>}
             {error && <p>Error: {error}</p>}

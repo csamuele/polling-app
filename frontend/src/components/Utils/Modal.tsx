@@ -6,6 +6,7 @@ interface ModalProps {
     onClose: () => void;
     children: React.ReactNode;
     title: string;
+    width?: string;
 }
 
 export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children, title }) => {
@@ -27,7 +28,7 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children, title }
     return ReactDOM.createPortal(
         <div className="fixed inset-0 flex items-center justify-center z-50">
             <div className="fixed inset-0 bg-black opacity-50"></div>
-            <div className="bg-white rounded-lg shadow-lg p-6 z-10">
+            <div className="bg-white rounded-lg shadow-lg p-6 z-10 dark:bg-gray-800">
                 <div className="flex justify-between items-center">
                     <h2 className="text-xl font-semibold mb-4">{title}</h2>
                     <button className="relative bottom-5 text-gray-600" onClick={onClose}>

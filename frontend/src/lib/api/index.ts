@@ -33,9 +33,12 @@ const $api = createClient(fetchClient);
 export default $api;
 import type { components } from "@lib/api/api";
 type Schemas = components["schemas"];
-export type Question = Schemas["Question"];
-export type Choice = Schemas["Choice"];
-export type PatchedQuestion = Schemas["PatchedQuestion"];
-
+export type QuestionWrite = Schemas["QuestionWrite"];
+export type QuestionRead = Schemas["QuestionRead"];
+export type ChoiceRead = Schemas["ChoiceRead"];
+export type ChoiceWrite = Schemas["ChoiceWrite"];
+export type PatchedQuestionWrite = Schemas["PatchedQuestionWrite"];
+export type Vote = Schemas["Vote"];
+export type CreateVote = Schemas["CreateVote"];
 
 export type {$defs, operations, paths, webhooks} from './api.ts';

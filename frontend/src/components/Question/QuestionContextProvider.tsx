@@ -1,15 +1,15 @@
 import React, { useContext, createContext, useState } from "react";
-import { Question } from "@lib/api/";
+import { QuestionWrite } from "@lib/api/";
 
 interface QuestionContextValue {
-    question?: Question | null;
-    setQuestion: (question: null | Question) => void;
+    question?: QuestionWrite | null;
+    setQuestion: (question: null | QuestionWrite) => void;
 }
 
 const QuestionContext = createContext<QuestionContextValue | undefined>(undefined);
 
 export const QuestionContextProvider = ({ children }: {children: React.ReactNode}) => {
-    const [question, setQuestion] = useState<Question | null>(null);
+    const [question, setQuestion] = useState<QuestionWrite | null>(null);
 
     return (
         <QuestionContext.Provider value={{ question, setQuestion }}>
