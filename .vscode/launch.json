@@ -5,11 +5,29 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Launch Chrome",
-            "request": "launch",
+            "name": "Vite Frontend Debug",
             "type": "chrome",
+            "request": "launch",
             "url": "http://localhost:3000",
-            "webRoot": "${workspaceFolder}/frontend"
+            "webRoot": "${workspaceFolder}/frontend/src",
+            "sourceMaps": true,
+            "skipFiles": ["<node_internals>/**"],
+            "runtimeArgs": ["--remote-debugging-port=9222"],
+            "env": {
+              "NODE_ENV": "development"
+            }
         },
+        {
+            "name": "Attach to Chrome",
+            "type": "chrome",
+            "request": "attach",
+            "port": 9222,
+            "webRoot": "${workspaceFolder}/frontend",
+            "sourceMaps": true,
+            "trace": true,
+            "sourceMapPathOverrides": {
+                "webpack:///src/*": "${webRoot}/src/*"
+            }
+        }
     ]
 }

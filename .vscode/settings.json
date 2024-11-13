@@ -1,7 +1,9 @@
 {
     "python.analysis.typeCheckingMode": "off",
     "terminal.integrated.cwd": "C:\\Users\\wallj\\OneDrive\\Documents\\polling-app",
-    "python.analysis.autoImportCompletions": true
+    "python.analysis.autoImportCompletions": true,
+    "search.useGlobalIgnoreFiles": true,
+    "search.useIgnoreFiles": false
   
 
 }

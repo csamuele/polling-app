@@ -4,44 +4,6 @@
  */
 
 export interface paths {
-    "/api/choices/": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** @description API endpoint that allows choices to be viewed or edited. */
-        get: operations["api_choices_list"];
-        put?: never;
-        /** @description API endpoint that allows choices to be viewed or edited. */
-        post: operations["api_choices_create"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/choices/{id}/": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** @description API endpoint that allows choices to be viewed or edited. */
-        get: operations["api_choices_retrieve"];
-        /** @description API endpoint that allows choices to be viewed or edited. */
-        put: operations["api_choices_update"];
-        post?: never;
-        /** @description API endpoint that allows choices to be viewed or edited. */
-        delete: operations["api_choices_destroy"];
-        options?: never;
-        head?: never;
-        /** @description API endpoint that allows choices to be viewed or edited. */
-        patch: operations["api_choices_partial_update"];
-        trace?: never;
-    };
     "/api/questions/": {
         parameters: {
             query?: never;
@@ -49,10 +11,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description API endpoint that returns the 5 most recent questions. */
+        /** @description Question endpoints. */
         get: operations["api_questions_list"];
         put?: never;
-        /** @description API endpoint that returns the 5 most recent questions. */
+        /** @description Question endpoints. */
         post: operations["api_questions_create"];
         delete?: never;
         options?: never;
@@ -67,16 +29,16 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description API endpoint that returns the 5 most recent questions. */
+        /** @description Question endpoints. */
         get: operations["api_questions_retrieve"];
-        /** @description API endpoint that returns the 5 most recent questions. */
+        /** @description Question endpoints. */
         put: operations["api_questions_update"];
         post?: never;
-        /** @description API endpoint that returns the 5 most recent questions. */
+        /** @description Question endpoints. */
         delete: operations["api_questions_destroy"];
         options?: never;
         head?: never;
-        /** @description API endpoint that returns the 5 most recent questions. */
+        /** @description Question endpoints. */
         patch: operations["api_questions_partial_update"];
         trace?: never;
     };
@@ -98,18 +60,66 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/exchange_token/": {
+    "/api/questions/{id}/vote/": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        /** @description Exchanges an authorization code from Keycloak for an access token. */
-        get: operations["Exchange Code for Token"];
+        get?: never;
+        put?: never;
+        post: operations["api_questions_vote_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/user-questions/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Endpoint for questions created by the user. */
+        get: operations["api_user_questions_list"];
         put?: never;
         post?: never;
         delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/user-votes/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["api_user_votes_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/votes/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: operations["api_votes_update"];
+        post?: never;
+        delete: operations["api_votes_destroy"];
         options?: never;
         head?: never;
         patch?: never;
@@ -119,61 +129,60 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
-        Choice: {
-            /** Format: uri */
-            readonly url: string;
+        ChoiceRead: {
+            readonly id: number;
+            readonly question: number;
             choice_text: string;
-            votes?: number;
-            /** Format: uri */
-            question: string;
+            readonly votes: number;
         };
-        PatchedChoice: {
-            /** Format: uri */
-            readonly url?: string;
-            choice_text?: string;
-            votes?: number;
-            /** Format: uri */
-            question?: string;
+        ChoiceWrite: {
+            id?: number;
+            readonly question: number;
+            choice_text: string;
+            readonly votes: number;
         };
-        PatchedQuestion: {
-            /** Format: uri */
-            readonly url?: string;
+        CreateVote: {
+            readonly id: number;
+            readonly question: number;
+            choices: number[];
+            readonly owner: string;
+        };
+        PatchedQuestionWrite: {
+            readonly id?: number;
             question_text?: string;
             /**
              * Date published
              * Format: date-time
              */
             pub_date?: string;
-            readonly choices?: components["schemas"]["Choice"][];
-            /** Format: uri */
-            readonly choices_url?: string;
-            /** @description Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only. */
-            readonly user?: string;
+            choices?: components["schemas"]["ChoiceWrite"][];
         };
-        Question: {
-            /** Format: uri */
-            readonly url: string;
+        QuestionRead: {
+            readonly id: number;
             question_text: string;
             /**
              * Date published
              * Format: date-time
              */
             pub_date: string;
-            readonly choices: components["schemas"]["Choice"][];
-            /** Format: uri */
-            readonly choices_url: string;
-            /** @description Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only. */
-            readonly user: string;
+            choices: components["schemas"]["ChoiceRead"][];
+            readonly votes: number;
         };
-        TokenResponse: {
-            access_token: string;
-            expires_in: number;
-            refresh_expires_in: number;
-            refresh_token: string;
-            token_type: string;
-            id_token?: string;
-            session_state: string;
-            scope: string;
+        QuestionWrite: {
+            readonly id: number;
+            question_text: string;
+            /**
+             * Date published
+             * Format: date-time
+             */
+            pub_date: string;
+            choices: components["schemas"]["ChoiceWrite"][];
+        };
+        Vote: {
+            readonly id: number;
+            question: components["schemas"]["QuestionRead"];
+            choices: components["schemas"]["ChoiceRead"][];
+            readonly owner: string;
         };
     };
     responses: never;
@@ -184,149 +193,6 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
-    api_choices_list: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Choice"][];
-                };
-            };
-        };
-    };
-    api_choices_create: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["Choice"];
-                "application/x-www-form-urlencoded": components["schemas"]["Choice"];
-                "multipart/form-data": components["schemas"]["Choice"];
-            };
-        };
-        responses: {
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Choice"];
-                };
-            };
-        };
-    };
-    api_choices_retrieve: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description A unique integer value identifying this choice. */
-                id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Choice"];
-                };
-            };
-        };
-    };
-    api_choices_update: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description A unique integer value identifying this choice. */
-                id: number;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["Choice"];
-                "application/x-www-form-urlencoded": components["schemas"]["Choice"];
-                "multipart/form-data": components["schemas"]["Choice"];
-            };
-        };
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Choice"];
-                };
-            };
-        };
-    };
-    api_choices_destroy: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description A unique integer value identifying this choice. */
-                id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description No response body */
-            204: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    api_choices_partial_update: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description A unique integer value identifying this choice. */
-                id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: {
-            content: {
-                "application/json": components["schemas"]["PatchedChoice"];
-                "application/x-www-form-urlencoded": components["schemas"]["PatchedChoice"];
-                "multipart/form-data": components["schemas"]["PatchedChoice"];
-            };
-        };
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Choice"];
-                };
-            };
-        };
-    };
     api_questions_list: {
         parameters: {
             query?: never;
@@ -341,7 +207,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Question"][];
+                    "application/json": components["schemas"]["QuestionRead"][];
                 };
             };
         };
@@ -355,9 +221,9 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["Question"];
-                "application/x-www-form-urlencoded": components["schemas"]["Question"];
-                "multipart/form-data": components["schemas"]["Question"];
+                "application/json": components["schemas"]["QuestionWrite"];
+                "application/x-www-form-urlencoded": components["schemas"]["QuestionWrite"];
+                "multipart/form-data": components["schemas"]["QuestionWrite"];
             };
         };
         responses: {
@@ -366,7 +232,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Question"];
+                    "application/json": components["schemas"]["QuestionWrite"];
                 };
             };
         };
@@ -388,7 +254,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Question"];
+                    "application/json": components["schemas"]["QuestionRead"];
                 };
             };
         };
@@ -405,9 +271,9 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["Question"];
-                "application/x-www-form-urlencoded": components["schemas"]["Question"];
-                "multipart/form-data": components["schemas"]["Question"];
+                "application/json": components["schemas"]["QuestionWrite"];
+                "application/x-www-form-urlencoded": components["schemas"]["QuestionWrite"];
+                "multipart/form-data": components["schemas"]["QuestionWrite"];
             };
         };
         responses: {
@@ -416,7 +282,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Question"];
+                    "application/json": components["schemas"]["QuestionWrite"];
                 };
             };
         };
@@ -454,9 +320,9 @@ export interface operations {
         };
         requestBody?: {
             content: {
-                "application/json": components["schemas"]["PatchedQuestion"];
-                "application/x-www-form-urlencoded": components["schemas"]["PatchedQuestion"];
-                "multipart/form-data": components["schemas"]["PatchedQuestion"];
+                "application/json": components["schemas"]["PatchedQuestionWrite"];
+                "application/x-www-form-urlencoded": components["schemas"]["PatchedQuestionWrite"];
+                "multipart/form-data": components["schemas"]["PatchedQuestionWrite"];
             };
         };
         responses: {
@@ -465,7 +331,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Question"];
+                    "application/json": components["schemas"]["QuestionWrite"];
                 };
             };
         };
@@ -486,7 +352,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Choice"][];
+                    "application/json": components["schemas"]["ChoiceRead"][];
                 };
             };
         };
@@ -502,9 +368,9 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["Choice"];
-                "application/x-www-form-urlencoded": components["schemas"]["Choice"];
-                "multipart/form-data": components["schemas"]["Choice"];
+                "application/json": components["schemas"]["ChoiceRead"];
+                "application/x-www-form-urlencoded": components["schemas"]["ChoiceRead"];
+                "multipart/form-data": components["schemas"]["ChoiceRead"];
             };
         };
         responses: {
@@ -513,19 +379,41 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Choice"];
+                    "application/json": components["schemas"]["ChoiceRead"];
                 };
             };
         };
     };
-    "Exchange Code for Token": {
+    api_questions_vote_create: {
         parameters: {
-            query: {
-                /** @description Authorization code */
-                code: string;
-                /** @description Redirect URI matching Keycloak config */
-                redirect_uri: string;
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
             };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateVote"];
+                "application/x-www-form-urlencoded": components["schemas"]["CreateVote"];
+                "multipart/form-data": components["schemas"]["CreateVote"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CreateVote"];
+                };
+            };
+        };
+    };
+    api_user_questions_list: {
+        parameters: {
+            query?: never;
             header?: never;
             path?: never;
             cookie?: never;
@@ -537,8 +425,74 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["TokenResponse"];
+                    "application/json": components["schemas"]["QuestionRead"][];
                 };
+            };
+        };
+    };
+    api_user_votes_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Vote"][];
+                };
+            };
+        };
+    };
+    api_votes_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateVote"];
+                "application/x-www-form-urlencoded": components["schemas"]["CreateVote"];
+                "multipart/form-data": components["schemas"]["CreateVote"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CreateVote"];
+                };
+            };
+        };
+    };
+    api_votes_destroy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };
