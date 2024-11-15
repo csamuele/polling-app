@@ -1,0 +1,2 @@
+[flake8]
+exclude = myenv,__pycache__,migrations,settings.py,./users/views.py

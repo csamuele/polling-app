@@ -1,5 +1,4 @@
 from django.apps import AppConfig
-import users.extensions
 
 
 class PollsConfig(AppConfig):
