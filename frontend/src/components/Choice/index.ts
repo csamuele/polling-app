@@ -1,1 +1,1 @@
-export * from './ChoiceInput';
+export * from "./ChoiceInput"

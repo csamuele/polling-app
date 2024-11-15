@@ -9,11 +9,11 @@
 //     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 
 //     return (
-//         <input 
-//         type="text" 
-//         placeholder="Choice" 
-//         className="block mb-2" 
-//         value={choice.choice_text} 
+//         <input
+//         type="text"
+//         placeholder="Choice"
+//         className="block mb-2"
+//         value={choice.choice_text}
 //         name="choice_text"
 //         onChange={onChange}/>
 //     )

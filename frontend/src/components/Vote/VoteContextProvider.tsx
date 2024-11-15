@@ -1,15 +1,19 @@
-import React, { useContext, createContext, useState } from "react";
-import { Vote } from "@lib/api/";
+import React, { useContext, createContext, useState } from "react"
+import { Vote } from "@lib/api/"
 
 interface VoteContextValue {
-    vote?: Vote | null;
-    setVote: (Vote: null | Vote) => void;
+    vote?: Vote | null
+    setVote: (Vote: null | Vote) => void
 }
 
-const VoteContext = createContext<VoteContextValue | undefined>(undefined);
+const VoteContext = createContext<VoteContextValue | undefined>(undefined)
 
-export const VoteContextProvider = ({ children }: {children: React.ReactNode}) => {
-    const [Vote, setVote] = useState<Vote | null>(null);
+export const VoteContextProvider = ({
+    children,
+}: {
+    children: React.ReactNode
+}) => {
+    const [Vote, setVote] = useState<Vote | null>(null)
 
     return (
         <VoteContext.Provider value={{ vote: Vote, setVote }}>
@@ -19,9 +23,9 @@ export const VoteContextProvider = ({ children }: {children: React.ReactNode}) =
 }
 
 export const useVote = () => {
-    const context = useContext(VoteContext);
+    const context = useContext(VoteContext)
     if (!context) {
-        throw new Error('useVote must be used within a VoteContextProvider');
+        throw new Error("useVote must be used within a VoteContextProvider")
     }
-    return context;
+    return context
 }
