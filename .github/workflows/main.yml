@@ -7,8 +7,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME_BACKEND: polling-app-backend
-  IMAGE_NAME_FRONTEND: polling-app-frontend
+
 
 jobs:
   build-and-push-images:
@@ -38,8 +37,6 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: set image name
-        run: echo "IMAGE_NAME=IMAGE_NAME_${{ matrix.service }}" | tr [:lower:] [:upper:] >> $GITHUB_ENV
 
       - name: Build and push ${{ matrix.service }} image
         uses: docker/build-push-action@v6
@@ -48,11 +45,11 @@ jobs:
           context: ./${{ matrix.service }}
           file: ./${{ matrix.service }}/Dockerfile.prod
           push: true
-          tags: ${{ env.REGISTRY }}/${{ github.repository_owner}}/${{ env.IMAGE_NAME }}:v1
+          tags: ${{ env.REGISTRY }}/${{ github.repository_owner}}/polling-app-${{ matrix.service }}:v1
 
       - name: Generate artifact attestation for ${{ matrix.service }} image
         uses: actions/attest-build-provenance@v1
         with:
-          subject-name: ${{ env.REGISTRY }}/${{ github.repository_owner}}/${{ env.IMAGE_NAME }}:v1
+          subject-name: ${{ env.REGISTRY }}/${{ github.repository_owner}}/polling-app-${{ matrix.service }}:v1
           subject-digest: ${{ steps.build-push.outputs.digest }}
           push-to-registry: true
