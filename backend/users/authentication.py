@@ -1,11 +1,10 @@
-from ast import Dict
-from types import SimpleNamespace
 from rest_framework.authentication import BaseAuthentication
 from rest_framework.exceptions import AuthenticationFailed
 from .keycloak_config import keycloak_openid
 from rest_framework.request import Request
 # from users.models import KeycloakUser
 import logging
+
 
 class KeycloakUser:
     def __init__(self, user_info):
@@ -21,7 +20,8 @@ class KeycloakUser:
         return True
 
     def __str__(self):
-        return self.username   
+        return self.username
+
 
 class KeycloakAuthentication(BaseAuthentication):
     def authenticate(self, request: Request):
@@ -29,11 +29,11 @@ class KeycloakAuthentication(BaseAuthentication):
         logging.info(f'auth_header: {auth_header}')
         if not auth_header:
             return None
-        
+
         try:
             # Extract token from header
             token = auth_header.split("Bearer ")[1]
-            
+
             # Verify token
             user_info = keycloak_openid.userinfo(token)
             if not user_info:

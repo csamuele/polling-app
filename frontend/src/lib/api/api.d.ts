@@ -6,494 +6,494 @@
 export interface paths {
     "/api/questions/": {
         parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
         /** @description Question endpoints. */
-        get: operations["api_questions_list"];
-        put?: never;
+        get: operations["api_questions_list"]
+        put?: never
         /** @description Question endpoints. */
-        post: operations["api_questions_create"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
+        post: operations["api_questions_create"]
+        delete?: never
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
+    }
     "/api/questions/{id}/": {
         parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
         /** @description Question endpoints. */
-        get: operations["api_questions_retrieve"];
+        get: operations["api_questions_retrieve"]
         /** @description Question endpoints. */
-        put: operations["api_questions_update"];
-        post?: never;
+        put: operations["api_questions_update"]
+        post?: never
         /** @description Question endpoints. */
-        delete: operations["api_questions_destroy"];
-        options?: never;
-        head?: never;
+        delete: operations["api_questions_destroy"]
+        options?: never
+        head?: never
         /** @description Question endpoints. */
-        patch: operations["api_questions_partial_update"];
-        trace?: never;
-    };
+        patch: operations["api_questions_partial_update"]
+        trace?: never
+    }
     "/api/questions/{id}/choices/": {
         parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
         /** @description API endpoint that returns all the choices for a particular question. */
-        get: operations["api_questions_choices_list"];
-        put?: never;
+        get: operations["api_questions_choices_list"]
+        put?: never
         /** @description API endpoint that returns all the choices for a particular question. */
-        post: operations["api_questions_choices_create"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
+        post: operations["api_questions_choices_create"]
+        delete?: never
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
+    }
     "/api/questions/{id}/vote/": {
         parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["api_questions_vote_create"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
+        get?: never
+        put?: never
+        post: operations["api_questions_vote_create"]
+        delete?: never
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
+    }
     "/api/user-questions/": {
         parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
         /** @description Endpoint for questions created by the user. */
-        get: operations["api_user_questions_list"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
+        get: operations["api_user_questions_list"]
+        put?: never
+        post?: never
+        delete?: never
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
+    }
     "/api/user-votes/": {
         parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["api_user_votes_list"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
+        get: operations["api_user_votes_list"]
+        put?: never
+        post?: never
+        delete?: never
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
+    }
     "/api/votes/{id}/": {
         parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put: operations["api_votes_update"];
-        post?: never;
-        delete: operations["api_votes_destroy"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
+        get?: never
+        put: operations["api_votes_update"]
+        post?: never
+        delete: operations["api_votes_destroy"]
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
+    }
 }
-export type webhooks = Record<string, never>;
+export type webhooks = Record<string, never>
 export interface components {
     schemas: {
         ChoiceRead: {
-            readonly id: number;
-            readonly question: number;
-            choice_text: string;
-            readonly votes: number;
-        };
+            readonly id: number
+            readonly question: number
+            choice_text: string
+            readonly votes: number
+        }
         ChoiceWrite: {
-            id?: number;
-            readonly question: number;
-            choice_text: string;
-            readonly votes: number;
-        };
+            id?: number
+            readonly question: number
+            choice_text: string
+            readonly votes: number
+        }
         CreateVote: {
-            readonly id: number;
-            readonly question: number;
-            choices: number[];
-            readonly owner: string;
-        };
+            readonly id: number
+            readonly question: number
+            choices: number[]
+            readonly owner: string
+        }
         PatchedQuestionWrite: {
-            readonly id?: number;
-            question_text?: string;
+            readonly id?: number
+            question_text?: string
             /**
              * Date published
              * Format: date-time
              */
-            pub_date?: string;
-            choices?: components["schemas"]["ChoiceWrite"][];
-        };
+            pub_date?: string
+            choices?: components["schemas"]["ChoiceWrite"][]
+        }
         QuestionRead: {
-            readonly id: number;
-            question_text: string;
+            readonly id: number
+            question_text: string
             /**
              * Date published
              * Format: date-time
              */
-            pub_date: string;
-            choices: components["schemas"]["ChoiceRead"][];
-            readonly votes: number;
-        };
+            pub_date: string
+            choices: components["schemas"]["ChoiceRead"][]
+            readonly votes: number
+        }
         QuestionWrite: {
-            readonly id: number;
-            question_text: string;
+            readonly id: number
+            question_text: string
             /**
              * Date published
              * Format: date-time
              */
-            pub_date: string;
-            choices: components["schemas"]["ChoiceWrite"][];
-        };
+            pub_date: string
+            choices: components["schemas"]["ChoiceWrite"][]
+        }
         Vote: {
-            readonly id: number;
-            question: components["schemas"]["QuestionRead"];
-            choices: components["schemas"]["ChoiceRead"][];
-            readonly owner: string;
-        };
-    };
-    responses: never;
-    parameters: never;
-    requestBodies: never;
-    headers: never;
-    pathItems: never;
+            readonly id: number
+            question: components["schemas"]["QuestionRead"]
+            choices: components["schemas"]["ChoiceRead"][]
+            readonly owner: string
+        }
+    }
+    responses: never
+    parameters: never
+    requestBodies: never
+    headers: never
+    pathItems: never
 }
-export type $defs = Record<string, never>;
+export type $defs = Record<string, never>
 export interface operations {
     api_questions_list: {
         parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
+        requestBody?: never
         responses: {
             200: {
                 headers: {
-                    [name: string]: unknown;
-                };
+                    [name: string]: unknown
+                }
                 content: {
-                    "application/json": components["schemas"]["QuestionRead"][];
-                };
-            };
-        };
-    };
+                    "application/json": components["schemas"]["QuestionRead"][]
+                }
+            }
+        }
+    }
     api_questions_create: {
         parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
         requestBody: {
             content: {
-                "application/json": components["schemas"]["QuestionWrite"];
-                "application/x-www-form-urlencoded": components["schemas"]["QuestionWrite"];
-                "multipart/form-data": components["schemas"]["QuestionWrite"];
-            };
-        };
+                "application/json": components["schemas"]["QuestionWrite"]
+                "application/x-www-form-urlencoded": components["schemas"]["QuestionWrite"]
+                "multipart/form-data": components["schemas"]["QuestionWrite"]
+            }
+        }
         responses: {
             201: {
                 headers: {
-                    [name: string]: unknown;
-                };
+                    [name: string]: unknown
+                }
                 content: {
-                    "application/json": components["schemas"]["QuestionWrite"];
-                };
-            };
-        };
-    };
+                    "application/json": components["schemas"]["QuestionWrite"]
+                }
+            }
+        }
+    }
     api_questions_retrieve: {
         parameters: {
-            query?: never;
-            header?: never;
+            query?: never
+            header?: never
             path: {
                 /** @description A unique integer value identifying this question. */
-                id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
+                id: number
+            }
+            cookie?: never
+        }
+        requestBody?: never
         responses: {
             200: {
                 headers: {
-                    [name: string]: unknown;
-                };
+                    [name: string]: unknown
+                }
                 content: {
-                    "application/json": components["schemas"]["QuestionRead"];
-                };
-            };
-        };
-    };
+                    "application/json": components["schemas"]["QuestionRead"]
+                }
+            }
+        }
+    }
     api_questions_update: {
         parameters: {
-            query?: never;
-            header?: never;
+            query?: never
+            header?: never
             path: {
                 /** @description A unique integer value identifying this question. */
-                id: number;
-            };
-            cookie?: never;
-        };
+                id: number
+            }
+            cookie?: never
+        }
         requestBody: {
             content: {
-                "application/json": components["schemas"]["QuestionWrite"];
-                "application/x-www-form-urlencoded": components["schemas"]["QuestionWrite"];
-                "multipart/form-data": components["schemas"]["QuestionWrite"];
-            };
-        };
+                "application/json": components["schemas"]["QuestionWrite"]
+                "application/x-www-form-urlencoded": components["schemas"]["QuestionWrite"]
+                "multipart/form-data": components["schemas"]["QuestionWrite"]
+            }
+        }
         responses: {
             200: {
                 headers: {
-                    [name: string]: unknown;
-                };
+                    [name: string]: unknown
+                }
                 content: {
-                    "application/json": components["schemas"]["QuestionWrite"];
-                };
-            };
-        };
-    };
+                    "application/json": components["schemas"]["QuestionWrite"]
+                }
+            }
+        }
+    }
     api_questions_destroy: {
         parameters: {
-            query?: never;
-            header?: never;
+            query?: never
+            header?: never
             path: {
                 /** @description A unique integer value identifying this question. */
-                id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
+                id: number
+            }
+            cookie?: never
+        }
+        requestBody?: never
         responses: {
             /** @description No response body */
             204: {
                 headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
+                    [name: string]: unknown
+                }
+                content?: never
+            }
+        }
+    }
     api_questions_partial_update: {
         parameters: {
-            query?: never;
-            header?: never;
+            query?: never
+            header?: never
             path: {
                 /** @description A unique integer value identifying this question. */
-                id: number;
-            };
-            cookie?: never;
-        };
+                id: number
+            }
+            cookie?: never
+        }
         requestBody?: {
             content: {
-                "application/json": components["schemas"]["PatchedQuestionWrite"];
-                "application/x-www-form-urlencoded": components["schemas"]["PatchedQuestionWrite"];
-                "multipart/form-data": components["schemas"]["PatchedQuestionWrite"];
-            };
-        };
+                "application/json": components["schemas"]["PatchedQuestionWrite"]
+                "application/x-www-form-urlencoded": components["schemas"]["PatchedQuestionWrite"]
+                "multipart/form-data": components["schemas"]["PatchedQuestionWrite"]
+            }
+        }
         responses: {
             200: {
                 headers: {
-                    [name: string]: unknown;
-                };
+                    [name: string]: unknown
+                }
                 content: {
-                    "application/json": components["schemas"]["QuestionWrite"];
-                };
-            };
-        };
-    };
+                    "application/json": components["schemas"]["QuestionWrite"]
+                }
+            }
+        }
+    }
     api_questions_choices_list: {
         parameters: {
-            query?: never;
-            header?: never;
+            query?: never
+            header?: never
             path: {
-                id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
+                id: number
+            }
+            cookie?: never
+        }
+        requestBody?: never
         responses: {
             200: {
                 headers: {
-                    [name: string]: unknown;
-                };
+                    [name: string]: unknown
+                }
                 content: {
-                    "application/json": components["schemas"]["ChoiceRead"][];
-                };
-            };
-        };
-    };
+                    "application/json": components["schemas"]["ChoiceRead"][]
+                }
+            }
+        }
+    }
     api_questions_choices_create: {
         parameters: {
-            query?: never;
-            header?: never;
+            query?: never
+            header?: never
             path: {
-                id: number;
-            };
-            cookie?: never;
-        };
+                id: number
+            }
+            cookie?: never
+        }
         requestBody: {
             content: {
-                "application/json": components["schemas"]["ChoiceRead"];
-                "application/x-www-form-urlencoded": components["schemas"]["ChoiceRead"];
-                "multipart/form-data": components["schemas"]["ChoiceRead"];
-            };
-        };
+                "application/json": components["schemas"]["ChoiceRead"]
+                "application/x-www-form-urlencoded": components["schemas"]["ChoiceRead"]
+                "multipart/form-data": components["schemas"]["ChoiceRead"]
+            }
+        }
         responses: {
             201: {
                 headers: {
-                    [name: string]: unknown;
-                };
+                    [name: string]: unknown
+                }
                 content: {
-                    "application/json": components["schemas"]["ChoiceRead"];
-                };
-            };
-        };
-    };
+                    "application/json": components["schemas"]["ChoiceRead"]
+                }
+            }
+        }
+    }
     api_questions_vote_create: {
         parameters: {
-            query?: never;
-            header?: never;
+            query?: never
+            header?: never
             path: {
-                id: number;
-            };
-            cookie?: never;
-        };
+                id: number
+            }
+            cookie?: never
+        }
         requestBody: {
             content: {
-                "application/json": components["schemas"]["CreateVote"];
-                "application/x-www-form-urlencoded": components["schemas"]["CreateVote"];
-                "multipart/form-data": components["schemas"]["CreateVote"];
-            };
-        };
+                "application/json": components["schemas"]["CreateVote"]
+                "application/x-www-form-urlencoded": components["schemas"]["CreateVote"]
+                "multipart/form-data": components["schemas"]["CreateVote"]
+            }
+        }
         responses: {
             201: {
                 headers: {
-                    [name: string]: unknown;
-                };
+                    [name: string]: unknown
+                }
                 content: {
-                    "application/json": components["schemas"]["CreateVote"];
-                };
-            };
-        };
-    };
+                    "application/json": components["schemas"]["CreateVote"]
+                }
+            }
+        }
+    }
     api_user_questions_list: {
         parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
+        requestBody?: never
         responses: {
             200: {
                 headers: {
-                    [name: string]: unknown;
-                };
+                    [name: string]: unknown
+                }
                 content: {
-                    "application/json": components["schemas"]["QuestionRead"][];
-                };
-            };
-        };
-    };
+                    "application/json": components["schemas"]["QuestionRead"][]
+                }
+            }
+        }
+    }
     api_user_votes_list: {
         parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
+        requestBody?: never
         responses: {
             200: {
                 headers: {
-                    [name: string]: unknown;
-                };
+                    [name: string]: unknown
+                }
                 content: {
-                    "application/json": components["schemas"]["Vote"][];
-                };
-            };
-        };
-    };
+                    "application/json": components["schemas"]["Vote"][]
+                }
+            }
+        }
+    }
     api_votes_update: {
         parameters: {
-            query?: never;
-            header?: never;
+            query?: never
+            header?: never
             path: {
-                id: number;
-            };
-            cookie?: never;
-        };
+                id: number
+            }
+            cookie?: never
+        }
         requestBody: {
             content: {
-                "application/json": components["schemas"]["CreateVote"];
-                "application/x-www-form-urlencoded": components["schemas"]["CreateVote"];
-                "multipart/form-data": components["schemas"]["CreateVote"];
-            };
-        };
+                "application/json": components["schemas"]["CreateVote"]
+                "application/x-www-form-urlencoded": components["schemas"]["CreateVote"]
+                "multipart/form-data": components["schemas"]["CreateVote"]
+            }
+        }
         responses: {
             200: {
                 headers: {
-                    [name: string]: unknown;
-                };
+                    [name: string]: unknown
+                }
                 content: {
-                    "application/json": components["schemas"]["CreateVote"];
-                };
-            };
-        };
-    };
+                    "application/json": components["schemas"]["CreateVote"]
+                }
+            }
+        }
+    }
     api_votes_destroy: {
         parameters: {
-            query?: never;
-            header?: never;
+            query?: never
+            header?: never
             path: {
-                id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
+                id: number
+            }
+            cookie?: never
+        }
+        requestBody?: never
         responses: {
             /** @description No response body */
             204: {
                 headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
+                    [name: string]: unknown
+                }
+                content?: never
+            }
+        }
+    }
 }

@@ -14,34 +14,3 @@ def redirect_to_keycloak_login(request):
 def redirect_to_keycloak_logout(request):
     return redirect('http://localhost:8080/realms/polling-app/protocol/openid-connect/logout?redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Faccounts%2Foidc%2Fkeycloak%2Flogout%2Fcallback%2F')
 
-
-# @extend_schema(
-#     operation_id="Exchange Code for Token",
-#     description="Exchanges an authorization code from Keycloak for an access token.",
-#     parameters=[
-#         OpenApiParameter(name="code", description="Authorization code", required=True, type=str),
-#         OpenApiParameter(name="redirect_uri", description="Redirect URI matching Keycloak config", required=True, type=str),
-#     ],
-#     responses={200: TokenResponseSerializer},
-# )
-# @api_view(['GET'])
-# @permission_classes([AllowAny])
-# def exchange_token(request: Request) -> Response:
-#     """
-#     takes token from frontend and exchanges it for a new token
-#     """
-#     auth_code = request.query_params.get('code')
-#     redirect_uri = request.query_params.get('redirect_uri')
-    
-#     if not auth_code or not redirect_uri:
-#         return Response({'error': 'code and redirect_uri are required'}, status=status.HTTP_400_BAD_REQUEST)
-
-#     try:
-#         token = keycloak_openid.token(
-#             auth_code=auth_code,
-#             grant_type='authorization_code',
-#             redirect_uri=redirect_uri
-#         )
-#         return Response(token, status=status.HTTP_200_OK)
-#     except Exception as e:
-#         return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
