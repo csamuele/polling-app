@@ -55,14 +55,14 @@ jobs:
       - name: Generate artifact attestation for backend image
         uses: actions/attest-build-provenance@v1
         with:
-          subject-name: ${{ env.REGISTRY }}/${{ github.repository_owner}}/${{ env.IMAGE_NAME_BACKEND }}
+          subject-name: ${{ env.REGISTRY }}/${{ github.repository_owner}}/${{ env.IMAGE_NAME_BACKEND }}:v1
           subject-digest: ${{ steps.push-backend.outputs.digest }}
           push-to-registry: true
       
       - name: Generate artifact attestation for frontend image
         uses: actions/attest-build-provenance@v1
         with:
-          subject-name: ${{ env.REGISTRY }}/${{ github.repository_owner}}/${{ env.IMAGE_NAME_FRONTEND }}
+          subject-name: ${{ env.REGISTRY }}/${{ github.repository_owner}}/${{ env.IMAGE_NAME_FRONTEND }}:v1
           subject-digest: ${{ steps.push-frontend.outputs.digest }}
           push-to-registry: true
       
