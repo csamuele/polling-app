@@ -47,9 +47,9 @@ jobs:
           push: true
           tags: ${{ env.REGISTRY }}/${{ github.repository_owner}}/polling-app-${{ matrix.service }}:v1
 
-      # - name: Generate artifact attestation for ${{ matrix.service }} image
-      #   uses: actions/attest-build-provenance@v1
-      #   with:
-      #     subject-name: ${{ env.REGISTRY }}/${{ github.repository_owner}}/polling-app-${{ matrix.service }}:v1
-      #     subject-digest: ${{ steps.build-push.outputs.digest }}
-      #     push-to-registry: true
+      - name: Generate artifact attestation for ${{ matrix.service }} image
+        uses: actions/attest-build-provenance@v1
+        with:
+          subject-name: ${{ env.REGISTRY }}/${{ github.repository_owner}}/polling-app-${{ matrix.service }}:v1
+          subject-digest: ${{ steps.build-push.outputs.digest }}
+          push-to-registry: true
