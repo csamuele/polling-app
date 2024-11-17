@@ -39,7 +39,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: set image name
-        run: echo "IMAGE_NAME=IMAGE_NAME_${{ matrix.service }}" | tr [:upper:] >> $GITHUB_ENV
+        run: echo "IMAGE_NAME=IMAGE_NAME_${{ matrix.service }}" | tr [:lower:] [:upper:] >> $GITHUB_ENV
 
       - name: Build and push ${{ matrix.service }} image
         uses: docker/build-push-action@v6
