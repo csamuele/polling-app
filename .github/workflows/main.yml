@@ -41,7 +41,7 @@ jobs:
           context: ./backend
           file: ./backend/Dockerfile.prod
           push: true
-          tags: ${{ env.REGISTRY }}/${{ github.repository_owner}}/${{ env.IMAGE_NAME_BACKEND }}:latest
+          tags: ${{ env.REGISTRY }}/${{ github.repository_owner}}/${{ env.IMAGE_NAME_BACKEND }}:v1
       
       - name: Build and push frontend image
         id: push-frontend
@@ -50,19 +50,19 @@ jobs:
           context: ./frontend
           file: ./frontend/Dockerfile.prod
           push: true
-          tags: ${{ env.REGISTRY }}/${{ github.repository_owner}}/${{ env.IMAGE_NAME_FRONTEND }}:latest
+          tags: ${{ env.REGISTRY }}/${{ github.repository_owner}}/${{ env.IMAGE_NAME_FRONTEND }}:v1
       
       - name: Generate artifact attestation for backend image
         uses: actions/attest-build-provenance@v1
         with:
-          subject-name: ${{ env.REGISTRY }}/${{ github.repository_owner}}/${{ env.IMAGE_NAME_BACKEND }}:latest
+          subject-name: ${{ env.REGISTRY }}/${{ github.repository_owner}}/${{ env.IMAGE_NAME_BACKEND }}
           subject-digest: ${{ steps.push-backend.outputs.digest }}
           push-to-registry: true
       
       - name: Generate artifact attestation for frontend image
         uses: actions/attest-build-provenance@v1
         with:
-          subject-name: ${{ env.REGISTRY }}/${{ github.repository_owner}}/${{ env.IMAGE_NAME_FRONTEND }}:latest
+          subject-name: ${{ env.REGISTRY }}/${{ github.repository_owner}}/${{ env.IMAGE_NAME_FRONTEND }}
           subject-digest: ${{ steps.push-frontend.outputs.digest }}
           push-to-registry: true
       
