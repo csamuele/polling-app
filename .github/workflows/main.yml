@@ -20,6 +20,10 @@ jobs:
       attestations: write
       id-token: write
 
+    strategy:
+      matrix:
+        service: [backend, frontend, keycloak]
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -33,36 +37,22 @@ jobs:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      
-      - name: Build and push backend image
+
+      - name: set image name
+        run: echo "IMAGE_NAME=IMAGE_NAME_${{ matrix.service }}" | tr [:upper:] >> $GITHUB_ENV
+
+      - name: Build and push ${{ matrix.service }} image
         uses: docker/build-push-action@v6
-        id: push-backend
+        id: build-push
         with:
-          context: ./backend
-          file: ./backend/Dockerfile.prod
+          context: ./${{ matrix.service }}
+          file: ./${{ matrix.service }}/Dockerfile.prod
           push: true
-          tags: ${{ env.REGISTRY }}/${{ github.repository_owner}}/${{ env.IMAGE_NAME_BACKEND }}:v1
-      
-      - name: Build and push frontend image
-        id: push-frontend
-        uses: docker/build-push-action@v6
-        with:
-          context: ./frontend
-          file: ./frontend/Dockerfile.prod
-          push: true
-          tags: ${{ env.REGISTRY }}/${{ github.repository_owner}}/${{ env.IMAGE_NAME_FRONTEND }}:v1
-      
-      - name: Generate artifact attestation for backend image
+          tags: ${{ env.REGISTRY }}/${{ github.repository_owner}}/${{ env.IMAGE_NAME }}:v1
+
+      - name: Generate artifact attestation for ${{ matrix.service }} image
         uses: actions/attest-build-provenance@v1
         with:
-          subject-name: ${{ env.REGISTRY }}/${{ github.repository_owner}}/${{ env.IMAGE_NAME_BACKEND }}:v1
-          subject-digest: ${{ steps.push-backend.outputs.digest }}
+          subject-name: ${{ env.REGISTRY }}/${{ github.repository_owner}}/${{ env.IMAGE_NAME }}:v1
+          subject-digest: ${{ steps.build-push.outputs.digest }}
           push-to-registry: true
-      
-      - name: Generate artifact attestation for frontend image
-        uses: actions/attest-build-provenance@v1
-        with:
-          subject-name: ${{ env.REGISTRY }}/${{ github.repository_owner}}/${{ env.IMAGE_NAME_FRONTEND }}:v1
-          subject-digest: ${{ steps.push-frontend.outputs.digest }}
-          push-to-registry: true
-      
