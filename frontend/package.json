@@ -4,8 +4,8 @@
     "version": "0.0.0",
     "type": "module",
     "scripts": {
-        "dev": "vite",
-        "build": "tsc -b && vite build && npm run generate:openapi",
+        "dev": "vite --host 0.0.0.0",
+        "build": "tsc -b && vite build",
         "lint": "eslint .",
         "preview": "vite preview",
         "generate:openapi": "npx openapi-typescript http://localhost:8000/api/schema -o ./src/lib/api/api-typings.d.ts"
