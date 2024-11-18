@@ -674,9 +674,9 @@
       "clientId": "polling-app-backend",
       "name": "",
       "description": "",
-      "rootUrl": "http://localhost:8000",
-      "adminUrl": "http://localhost:8000",
-      "baseUrl": "http://localhost:8000",
+      "rootUrl": "${BACKEND_URL}/",
+      "adminUrl": "${BACKEND_URL}/",
+      "baseUrl": "${BACKEND_URL}/",
       "surrogateAuthRequired": false,
       "enabled": true,
       "alwaysDisplayInConsole": false,
@@ -684,10 +684,10 @@
       "secret": "${KC_CLIENT_SECRET}",
       "redirectUris": [
         "${FRONTEND_URL}/*",
-        "http://localhost:8000/*"
+        "${BACKEND_URL}/*"
       ],
       "webOrigins": [
-        "http://localhost:8000"
+        "${BACKEND_URL}"
       ],
       "notBefore": 0,
       "bearerOnly": false,
