@@ -83,9 +83,6 @@ services:
     image: ghcr.io/csamuele/polling-app-frontend:v1
     ports: 
       - 80:80
-    environment:
-      - VITE_API_URL=http://${HOST}:8000/
-      - VITE_KEYCLOAK_URL=http://${HOST}:8080/
     # volumes:
     #   - ./frontend/nginx.conf:/etc/nginx/conf.d/default.conf
 volumes:
