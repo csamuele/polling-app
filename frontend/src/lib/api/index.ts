@@ -1,6 +1,6 @@
+import type { components, paths } from "@lib/api/api"
 import createFetchClient, { type Middleware } from "openapi-fetch"
 import createClient from "openapi-react-query"
-import type { paths } from "@lib/api/api"
 import keycloak from "../../keycloak"
 
 const throwOnError: Middleware = {
@@ -28,14 +28,13 @@ const authMiddleware: Middleware = {
 }
 
 export const fetchClient = createFetchClient<paths>({
-    baseUrl: "http://localhost:8000/",
+    baseUrl: import.meta.env.VITE_API_URL,
 })
 fetchClient.use(authMiddleware)
 fetchClient.use(throwOnError)
 const $api = createClient(fetchClient)
 
 export default $api
-import type { components } from "@lib/api/api"
 type Schemas = components["schemas"]
 export type QuestionWrite = Schemas["QuestionWrite"]
 export type QuestionRead = Schemas["QuestionRead"]
@@ -46,3 +45,4 @@ export type Vote = Schemas["Vote"]
 export type CreateVote = Schemas["CreateVote"]
 
 export type { $defs, operations, paths, webhooks } from "./api.ts"
+
