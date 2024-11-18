@@ -1,9 +1,9 @@
 import Keycloak from "keycloak-js"
 
 const keycloak = new Keycloak({
-    realm: import.meta.env.VITE_KEYCLOAK_REALM,
+    realm: "polling-app",
     url: import.meta.env.VITE_KEYCLOAK_URL,
-    clientId: import.meta.env.VITE_KEYCLOAK_CLIENT_ID,
+    clientId: "polling-app-frontend",
 })
 
 export default keycloak
