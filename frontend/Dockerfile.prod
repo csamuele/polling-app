@@ -10,8 +10,8 @@ COPY . .
 
 
 
-ENV VITE_API_URL=http://localhost:8000
-ENV VITE_KEYCLOAK_URL=http://localhost:8080
+ENV VITE_API_URL=http://146.190.165.194:8000
+ENV VITE_KEYCLOAK_URL=http://146.190.165.194:8080
 
 RUN npm run build
 

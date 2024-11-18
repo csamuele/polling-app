@@ -21,9 +21,7 @@ services:
     expose:
       - 5432
   keycloak:
-    build:
-      context: ./keycloak
-      dockerfile: Dockerfile.prod
+    image: ghcr.io/csamuele/polling-app-keycloak:v1
     environment:
       KC_BOOTSTRAP_ADMIN_USERNAME: ${KEYCLOAK_ADMIN_USERNAME}
       KC_BOOTSTRAP_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}  
@@ -55,9 +53,7 @@ services:
 
 
   backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile.prod
+    image: ghcr.io/csamuele/polling-app-backend:v1
     command: gunicorn polling_app.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - static_volume:/home/app/web/staticfiles
