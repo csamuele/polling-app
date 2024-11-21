@@ -26,8 +26,8 @@ services:
       KC_BOOTSTRAP_ADMIN_USERNAME: ${KEYCLOAK_ADMIN_USERNAME}
       KC_BOOTSTRAP_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}  
       KC_CLIENT_SECRET: ${KEYCLOAK_CLIENT_SECRET}
-      FRONTEND_URL: http://${HOST}
-      BACKEND_URL: http://${HOST}:8000
+      FRONTEND_URL: https://${HOST}
+      BACKEND_URL: https://${HOST}:8000
 
       KC_DB: postgres
       KC_DB_URL: jdbc:postgresql://kcdb:5432/${KCDB_NAME}
@@ -79,9 +79,10 @@ services:
     image: ghcr.io/csamuele/polling-app-frontend:v1
     ports: 
       - 80:80
+      - 443:443
     volumes:
       - ./nginx/conf/:/etc/nginx/conf.d/:ro
-      - ./certbot/www/:/var/www/certbot:ro
+      - ./certbot/conf/:/etc/letsencrypt/:ro
     depends_on:
       - backend
   certbot:

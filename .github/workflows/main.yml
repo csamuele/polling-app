@@ -46,7 +46,6 @@ jobs:
           file: ./${{ matrix.service }}/Dockerfile.prod
           push: true
           tags: ${{ env.REGISTRY }}/${{ github.repository_owner}}/polling-app-${{ matrix.service }}:v1
-          # build-args: ${{ matrix.service == 'frontend' && 'VITE_API_URL=http://146.190.165.194:8000 --build-arg VITE_KEYCLOAK_URL=http://146.190.165.194:8080' || '' }}
 
       - name: Generate artifact attestation for ${{ matrix.service }} image
         uses: actions/attest-build-provenance@v1
