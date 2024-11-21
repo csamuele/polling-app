@@ -10,21 +10,21 @@ COPY . .
 
 
 
-ENV VITE_API_URL=https://pollifyapp.online:8000
-ENV VITE_KEYCLOAK_URL=https://pollifyapp.online:8080
+ENV VITE_API_URL=https://api.pollifyapp.online
+ENV VITE_KEYCLOAK_URL=https://auth.pollifyapp.online
 
 RUN npm run build
 
 
 # Stage 2: Set up NGINX with Certbot
-FROM nginx:1.27-bookworm
+FROM node:18-bookworm
 
-# Install Certbot and required packages
-RUN apt-get update && apt-get install -y \
-    && apt-get clean
+# Copy the build output
+COPY --from=build /app/dist ./dist
 
-COPY --from=build /app/dist /usr/share/nginx/html/
+# Install 'serve'
+RUN npm install -g serve
 
-EXPOSE 80 443
+# Serve the static files
+CMD ["serve", "-s", "dist", "-l", "80"]
 
-CMD ["nginx", "-g", "daemon off;"]
