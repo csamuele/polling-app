@@ -29,6 +29,13 @@ Alternatively, if you want just the database you can run
 docker compose up -d keycloak
 docker compose up -d db
 ```
-to just run keycloak and the postgres database so you can run the frontend with `npm run dev` and the backend with `python manage.py runserver`  
+to just run keycloak and the postgres database so you can run the frontend with 
+```console
+npm run dev
+```
+and the backend with 
+```console
+python manage.py runserver
+```  
 
 I have also set up launch profiles in vscode so you can debug each service. 
