@@ -1,10 +1,10 @@
-import React, { useState } from "react"
+import { DarkModeToggle } from "@components/Header/DarkModeToggle"
 import { Login } from "@components/Header/Login"
+import { NavMenu } from "@components/Header/NavMenu"
 import { NewQuestion } from "@components/Header/NewQuestion"
 import { useKeycloak } from "@react-keycloak/web"
+import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { DarkModeToggle } from "@components/Header/DarkModeToggle"
-import { NavMenu } from "@components/Header/NavMenu"
 
 export const Header: React.FC = () => {
     //nav menu with home on the left and login and register on the right
@@ -22,7 +22,7 @@ export const Header: React.FC = () => {
                     onClick={() => navigate("/")}
                     className="text-2xl font-bold cursor-pointer"
                 >
-                    Poll App
+                    Pollify App
                 </h1>
                 <button className="block lg:hidden" onClick={toggleMenu}>
                     <svg
