@@ -27,25 +27,28 @@ services:
       KC_BOOTSTRAP_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}  
       KC_CLIENT_SECRET: ${KEYCLOAK_CLIENT_SECRET}
       FRONTEND_URL: https://${HOST}
-      BACKEND_URL: https://${HOST}:8000
+      BACKEND_URL: https://api.${HOST}
 
       KC_DB: postgres
       KC_DB_URL: jdbc:postgresql://kcdb:5432/${KCDB_NAME}
       KC_DB_USERNAME: ${KCDB_USER}
       KC_DB_PASSWORD: ${KCDB_PASSWORD}
-      KC_HOSTNAME: ${HOST}
-      KC_HOSTNAME_STRICT: false
-      KC_HOSTNAME_STRICT_HTTPS: false
-
+      KC_HOSTNAME: https://auth.${HOST}
+      KC_HOSTNAME_STRICT: true
+      KC_HOSTNAME_STRICT_HTTPS: true
+      KC_PROXY_PROTOCAL_ENABLED: true
+      KC_PROXY_HEADER: xforwarded
+      KC_HTTP_ENABLED: 'true'
+      KC_HOSTNAME_BACKCHANNEL_DYNAMIC: true
       KC_LOG_LEVEL: INFO
       KC_METRICS_ENABLED: 'true'
       KC_HEALTH_ENABLED: 'true'
     command: 
-      - start-dev
+      - start
       - --import-realm
       - --verbose
     ports:
-      - 8080:8080
+      - 127.0.0.1:8080:8080
     depends_on:
       - kcdb
 
@@ -56,7 +59,7 @@ services:
     volumes:
       - static_volume:/home/app/web/staticfiles
     ports:
-      - 8000:8000
+      - 127.0.0.1:8000:8000
     environment:
       DEBUG: 0
       SECRET_KEY: ${SECRET_KEY}
